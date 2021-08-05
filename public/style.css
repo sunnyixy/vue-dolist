@@ -1,0 +1,46 @@
+/* 样式 */
+li{
+	list-style: none;
+	height: 0px;
+}
+.con_todo{
+	margin-left: 20px;
+	margin-right: 20px;
+	width:45%;
+	height:50px;
+	background:black;
+}
+.con_todo input{
+	width: 500px;
+	height: 30px;
+}
+.con_do{
+	width:45%;
+	height:650px;
+	margin-left: 20px;
+	float:left;
+	background: #f6f9f4;
+}
+.con_do_li{
+	display: inline-block;
+	margin-left: 10px;
+}
+.con_done{
+	color: white;
+	width:45%;
+	height:650px;
+	margin-right: 20px;
+	float:right;
+	background:#150f0f;
+}
+h5{
+	font-size: medium;
+	font-family: "宋体";
+}
+.icon {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
