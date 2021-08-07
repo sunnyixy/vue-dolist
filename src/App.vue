@@ -1,84 +1,38 @@
 <template>
-  <div id="con_todo" class="con_todo">
-    <input type="text" v-model="todo" />
-    <button v-on:click="submit" style="margin:10px">提交</button>
+  <div id="nav">
+    <router-link to="/">Login</router-link> 
+    <h1>|</h1>
+    <router-link to="/todo">todo</router-link>
   </div>
-
-  <div id="con_do" class="con_do">
-    <h2>待办事项</h2>
-    <ul>
-      <template v-for="(v,index) in dolist" :key="index">
-        <li>
-			<h5>{{index+1}}...{{v}}
-				<span class="con_do_li">
-					<svg class="icon" aria-hidden="true" @click="done(v,index)">
-						<use xlink:href="#icon-duigreen"></use>
-					</svg>
-				</span>
-			</h5>
-		</li>
-      </template>
-    </ul>
-  </div>
-
-  <div id="con_done" class="con_done">
-    <h2>已完成事项</h2>
-    <ul>
-      <template v-for="(v,index) in list" :key="index">
-        <li>
-			<h5>{{index+1}}..&nbsp;&nbsp;{{v}}
-				<span class="con_do_li">
-					<svg class="icon" aria-hidden="true" @click="clear(index)">
-						<use xlink:href="#icon-cuo"></use>
-					</svg>
-				</span>
-			</h5>
-		</li>
-      </template>
-    </ul>
-  </div>
+  <router-view/>
 </template>
-<script>
-import { ref } from 'vue';
-import '../public/iconfont.js';
-export default {
-  name: 'App',
-  setup(){
-    // 事项
-    const todo = ref('');
-    // 待办事项
-    const dolist = ref([]);
-    // 已完成事项 
-    const list = ref([]); 
-
-    // 提交事件
-    const submit = ()=>{
-      // 追加至待办事项
-      dolist.value.push(...[todo.value])
-      // 清空todo
-      todo.value = ''
-    }
-    // 完成待办事项
-    const done = (v,index)=>{
-      list.value.push(...[v])       // 追加至已完成
-      dolist.value.splice(index,1)  // 根据索引删除数组
-    }
-    //删除已完成事项
-    const clear = (index)=>{
-      list.value.splice(index,1) // 根据索引删除数组
-    }
-    
-    return {
-		todo,dolist,list,submit,done,clear
-    }
-  }
-}
-</script>
 
 <style>
 #app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-@import url("../public/style.css");
+
+#nav {
+  height: 50px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 2em;
+  margin: 10px;
+}
+
+#nav a.router-link-exact-active {
+  color: #83a395;
+}
+
+h1{
+  display: inline;
+}
 </style>
