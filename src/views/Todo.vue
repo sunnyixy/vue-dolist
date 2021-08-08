@@ -45,12 +45,19 @@
 <script>
 import { ref } from 'vue';
 import '../../public/iconfont.js';
-import {useRoute} from 'vue-router'
+import {useRoute} from 'vue-router';
+import { Storage } from '../assets/js/todo.js';
 export default {
-  name: 'App',
+  name: 'Todo',
   setup(){
     const route = useRoute();
+    // 用户邮箱
     const email = route.params.email;
+    //保存待完成事项的键为登录者邮箱加T
+    const todo_id = email+'T'
+    //保存已完成事项的键为登录者邮箱加F
+    const done_id = email+'F'
+  
     // 事项
     const todo = ref('');
     // 待办事项
@@ -58,12 +65,26 @@ export default {
     // 已完成事项 
     const list = ref([]); 
 
+    // 先列出保存过的事项,包括待完成和已完成的
+    if(Storage.get(todo_id)==null || Storage.get(done_id)==null ){
+      dolist.value.push('快来写下第一个事项吧！')
+      list.value.push('欢迎到来！')
+      Storage.set(done_id,list.value)
+      Storage.set(todo_id,dolist.value)
+    }
+    dolist.value = Storage.get(todo_id)
+    list.value = Storage.get(done_id)
+
+
+
     // 提交事件
     const submit = ()=>{
       //判读用户提交的内容是否为空
       if(todo.value != ""){
         // 追加至待办事项
         dolist.value.push(...[todo.value])
+        //添加到代办的localstorage======================
+        Storage.set(todo_id,dolist.value)
         // 清空todo
         todo.value = ''
       }else{
@@ -73,12 +94,19 @@ export default {
     }
     // 完成待办事项
     const done = (v,index)=>{
-      list.value.push(...[v])       // 追加至已完成
-      dolist.value.splice(index,1)  // 根据索引删除数组
+      // 追加至已完成
+      list.value.push(...[v])   
+      // 根据索引删除数组    
+      dolist.value.splice(index,1)  
+      // 追加到已完成的localstorage
+      Storage.set(done_id,list.value)
+      Storage.set(todo_id,dolist.value)
     }
     //删除已完成事项
     const clear = (index)=>{
       list.value.splice(index,1) // 根据索引删除数组
+      // 追加到已完成的localstorage
+      Storage.set(done_id,list.value)
     }
     
     return {
